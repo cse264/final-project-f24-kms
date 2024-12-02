@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Button, Container, Box, Typography } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Use Routes instead of Switch
-
-// Components for different views
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 import Dashboard from "./components/Dashboard";
 import StudyGroup from "./components/StudyGroup";
 import AdminDashboard from "./components/AdminDashboard";
 import Profile from './components/Profile';
+//import Logout from './components/Logout'; 
 
-// Simulating user roles (in real app, this would be dynamic based on login)
+
 const mockUser = {
   username: "john_doe",
   role: "PremiumUser", // "Admin", "FreeUser", or "PremiumUser"
@@ -26,6 +25,7 @@ function App() {
       return <Dashboard userRole="FreeUser" />;
     }
   };
+  
 
   return (
     <Router>
