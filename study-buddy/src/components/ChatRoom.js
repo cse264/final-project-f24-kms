@@ -1,13 +1,45 @@
-import React, { useState } from "react";
-import { Typography, TextField, Button, Box, List, ListItem, ListItemText } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Typography,
+  TextField,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+  ListItemAvatar,
+} from "@mui/material";
 
 function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
+  // Load messages from local storage on component mount
+  useEffect(() => {
+    const savedMessages = JSON.parse(localStorage.getItem("messages")) || [];
+    setMessages(savedMessages);
+
+    // Generate a random profile picture URL if not already set
+    if (!profilePicture) {
+      setProfilePicture(`https://i.pravatar.cc/150?u=${Math.random()}`);
+    }
+  }, []);
+
+  // Save messages to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem("messages", JSON.stringify(messages));
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (currentMessage.trim()) {
-      setMessages([...messages, currentMessage]);
+      const newMessage = {
+        text: currentMessage,
+        timestamp: new Date().toLocaleTimeString(),
+        profilePicture,
+      };
+      setMessages([...messages, newMessage]);
       setCurrentMessage("");
     }
   };
@@ -15,7 +47,7 @@ function ChatRoom() {
   return (
     <div
       style={{
-        backgroundColor: "#f4f4f4",
+        backgroundColor: "#e9f7fa",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -31,23 +63,38 @@ function ChatRoom() {
         style={{
           width: "80%",
           maxWidth: "600px",
-          backgroundColor: "white",
+          backgroundColor: "#fff",
           padding: "20px",
-          borderRadius: "8px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+          borderRadius: "12px",
+          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
         }}
       >
         {/* Chat Messages */}
         <List style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "20px" }}>
           {messages.map((message, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={message} />
+            <ListItem
+              key={index}
+              style={{
+                alignItems: "flex-start",
+                backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#f4f4f4",
+                borderRadius: "8px",
+                marginBottom: "10px",
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar src={message.profilePicture} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={message.text}
+                secondary={message.timestamp}
+                style={{ wordBreak: "break-word" }}
+              />
             </ListItem>
           ))}
         </List>
 
         {/* Input Box */}
-        <Box style={{ display: "flex", gap: "10px" }}>
+        <Box style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <TextField
             fullWidth
             variant="outlined"
@@ -55,7 +102,12 @@ function ChatRoom() {
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleSendMessage}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ padding: "10px 20px", fontWeight: "bold" }}
+            onClick={handleSendMessage}
+          >
             Send
           </Button>
         </Box>
@@ -65,3 +117,4 @@ function ChatRoom() {
 }
 
 export default ChatRoom;
+
