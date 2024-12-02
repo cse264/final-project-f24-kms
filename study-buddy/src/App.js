@@ -10,7 +10,6 @@ import Profile from "./components/Profile";
 import CalendarPage from "./components/CalendarPage"; // Import CalendarPage
 import ChatRoom from "./components/ChatRoom"; // Import ChatRoom component
 
-// Simulating user roles
 const mockUser = {
   username: "john_doe",
   role: "PremiumUser", // "Admin", "FreeUser", or "PremiumUser"
@@ -28,6 +27,7 @@ function App() {
       return <Dashboard userRole="FreeUser" />;
     }
   };
+  
 
   return (
     <Router>
