@@ -23,7 +23,7 @@ function ChatRoom() {
 
     // Generate a random profile picture URL if not already set
     if (!profilePicture) {
-      setProfilePicture(`https://i.pravatar.cc/150?u=${Math.random()}`);
+      setProfilePicture(`https://randomuser.me/api/portraits/men/63.jpg`);
     }
   }, []);
 
