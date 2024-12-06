@@ -26,4 +26,4 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getDatabase();
 
-export default {app, db, auth};
+export {firebaseConfig};
