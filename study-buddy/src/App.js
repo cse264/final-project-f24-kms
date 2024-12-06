@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"; // Updated imports
 import { AppBar, Toolbar, Button, Container, Box } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {firebaseConfig} from "./backend/config"
 import Dashboard from "./components/Dashboard";
 import StudyGroup from "./components/StudyGroup";
 import AdminDashboard from "./components/AdminDashboard";
@@ -19,25 +21,32 @@ function App() {
 
   useEffect(() => {
     // Fetch Firebase configuration dynamically from the backend
-    fetch("/api/firebase-config")
-      .then((res) => res.json())
-      .then((config) => {
-        const app = initializeApp(config);
-        const authInstance = getAuth(app); // Initialize Firebase Auth
-        setAuth(authInstance); // Save the auth instance
-        setFirebaseInitialized(true);
+    // fetch("/api/firebase-config")
+    //   .then((res) => res.json())
+    //   .then((config) => {
+    //     const app = initializeApp(config);
+    //     const authInstance = getAuth(app); // Initialize Firebase Auth
+    //     setAuth(authInstance); // Save the auth instance
+    //     setFirebaseInitialized(true);
 
-        // Listen for auth state changes
-        onAuthStateChanged(authInstance, (firebaseUser) => {
-          if (firebaseUser) {
-            // Update user state with user info
-            setUser({ email: firebaseUser.email, role: "FreeUser" }); // Set role dynamically
-          } else {
-            setUser(null);
-          }
-        });
-      })
-      .catch((error) => console.error("Failed to initialize Firebase:", error));
+    //     // Listen for auth state changes
+    //     onAuthStateChanged(authInstance, (firebaseUser) => {
+    //       if (firebaseUser) {
+    //         // Update user state with user info
+    //         setUser({ email: firebaseUser.email, role: "FreeUser" }); // Set role dynamically
+    //       } else {
+    //         setUser(null);
+    //       }
+    //     });
+    //   })
+    //   .catch((error) => console.error("Failed to initialize Firebase:", error));
+
+    const app = initializeApp(firebaseConfig);
+    setFirebaseInitialized(true)
+    // Initialize Firebase Authentication and get a reference to the service
+    const auth = getAuth(app);
+    setAuth(auth)
+    const db = getDatabase();
   }, []);
 
   const handleLogout = async () => {
