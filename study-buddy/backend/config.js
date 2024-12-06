@@ -14,7 +14,7 @@ const firebaseConfig = {
   authDomain: process.env.FIREBASE_AUTHDOMAIN, //"kms-6287f.firebaseapp.com",
   databaseURL: process.env.FIREBASE_DATABASEURL, //"https://kms-6287f-default-rtdb.firebaseio.com",
   projectId: process.env.FIREBASE_PROJECTID, //"kms-6287f",
-  storageBucket: process.env.SOTRAGEBUCKET, //"kms-6287f.firebasestorage.app",
+  storageBucket: process.env.FIREBASE_STORAGEBUCKET, //"kms-6287f.firebasestorage.app",
   messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID, //"716058038214",
   appId: process.env.FIREBASE_APPID, //"1:716058038214:web:d259ae3cc198f3f9faacc7",
   measurementId: process.env.FIREBASE_MEASUREMENTID //"G-JCRMQ31H7Z"
