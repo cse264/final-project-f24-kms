@@ -9,48 +9,55 @@ function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form from refreshing the page
+    e.preventDefault();
 
-    // Check credentials for PremiumUser
     if (username === "johndoe" && password === "johndoe") {
-      onLogin(username, "PremiumUser"); // Pass PremiumUser role to App
-      navigate("/"); // Navigate to the dashboard
-    }
-    // Check credentials for FreeUser
-    else if (username === "freeuser" && password === "freeuser") {
-      onLogin(username, "FreeUser"); // Pass FreeUser role to App
-      navigate("/"); // Navigate to the dashboard
-    }
-    // Invalid credentials
-    else {
-      setError("Invalid username or password"); // Show error message
+      onLogin(username, "PremiumUser");
+      navigate("/");
+    } else if (username === "freeuser" && password === "freeuser") {
+      onLogin(username, "FreeUser");
+      navigate("/");
+    } else {
+      setError("Invalid username or password");
     }
   };
 
   return (
     <Box
-      style={{
-        backgroundColor: "#f4f4f4",
+      sx={{
         minHeight: "100vh",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
+        background: "radial-gradient(circle at top, #1f1f1f, #0f0f0f)",
+        padding: 3,
       }}
     >
       <Box
-        style={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "8px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-          width: "400px",
+        sx={{
+          background: "rgba(255, 255, 255, 0.1)",
+          backdropFilter: "blur(10px)",
+          borderRadius: 5,
+          padding: 5,
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+          width: "350px",
           textAlign: "center",
+          color: "white",
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Login
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            letterSpacing: "1px",
+            textShadow: "0 2px 10px rgba(255, 255, 255, 0.5)",
+          }}
+        >
+          Study Buddy Login 📖
+        </Typography>
+        <Typography variant="body2" sx={{ marginBottom: 3, opacity: 0.8 }}>
+          Access your account with your credentials
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -59,7 +66,20 @@ function Login({ onLogin }) {
             label="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ marginBottom: "15px" }}
+            sx={{
+              marginBottom: 2,
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "30px",
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "white",
+                "& fieldset": {
+                  borderColor: "rgba(255, 255, 255, 0.3)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+                },
+              },
+            }}
           />
           <TextField
             fullWidth
@@ -68,23 +88,50 @@ function Login({ onLogin }) {
             label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ marginBottom: "15px" }}
+            sx={{
+              marginBottom: 2,
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "30px",
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "white",
+                "& fieldset": {
+                  borderColor: "rgba(255, 255, 255, 0.3)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+                },
+              },
+            }}
           />
           {error && (
-            <Typography color="error" style={{ marginBottom: "15px" }}>
+            <Typography color="error" sx={{ marginBottom: 2, fontWeight: "bold" }}>
               {error}
             </Typography>
           )}
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            style={{ fontWeight: "bold" }}
+            sx={{
+              padding: "10px",
+              fontWeight: "bold",
+              fontSize: "16px",
+              background: "linear-gradient(45deg, #6c63ff, #5db8fe)",
+              borderRadius: "30px",
+              "&:hover": {
+                background: "linear-gradient(45deg, #5db8fe, #6c63ff)",
+              },
+            }}
           >
             Login
           </Button>
         </form>
+        <Typography
+          variant="body2"
+          sx={{ marginTop: 2, opacity: 0.8, cursor: "pointer", textDecoration: "underline" }}
+        >
+          Don’t have an account? Sign Up
+        </Typography>
       </Box>
     </Box>
   );
